@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Status das solicitações</h1>
+{% if solicitacoes %}
+<table>
+  <thead>
+    <tr><th>Nº</th><th>Evento</th><th>Data</th><th>Horário</th><th>Pessoas</th><th>Status</th><th>Sala ou motivo</th></tr>
+  </thead>
+  <tbody>
+    {% for s in solicitacoes %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.evento }}</td>
+      <td>{{ s.data|data_br }}</td>
+      <td>{{ s.hora_inicio }} às {{ s.hora_fim }}</td>
+      <td>{{ s.qtd_pessoas }}</td>
+      <td>{{ s.status|capitalize }}</td>
+      <td>
+        {% if s.status == 'aprovada' %}{{ nomes_salas.get(s.sala_id, '') }}
+        {% elif s.status == 'recusada' %}{{ s.motivo_recusa }}
+        {% else %}Aguardando a administração{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Nenhuma solicitação ainda.</p>
+{% endif %}
+{% endblock %}

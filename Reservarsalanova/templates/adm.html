@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Fila da administração: solicitações pendentes</h1>
+{% if solicitacoes %}
+<table>
+  <thead>
+    <tr><th>Nº</th><th>Evento</th><th>Data</th><th>Horário</th><th>Pessoas</th><th>Ação</th></tr>
+  </thead>
+  <tbody>
+    {% for s in solicitacoes %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.evento }}</td>
+      <td>{{ s.data|data_br }}</td>
+      <td>{{ s.hora_inicio }} às {{ s.hora_fim }}</td>
+      <td>{{ s.qtd_pessoas }}</td>
+      <td><a href="{{ url_for('detalhe', id_pedido=s.id) }}">Analisar</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Nenhuma solicitação pendente.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Salas</h1>
+<div class="caixa">
+  <h2>Cadastrar sala</h2>
+  <form method="post" action="{{ url_for('salas') }}">
+    <div class="linha">
+      <div>
+        <label for="nome">Nome da sala</label>
+        <input id="nome" name="nome" required>
+      </div>
+      <div>
+        <label for="capacidade">Capacidade (pessoas)</label>
+        <input id="capacidade" name="capacidade" type="number" min="1" required>
+      </div>
+    </div>
+    <button type="submit">Cadastrar sala</button>
+  </form>
+</div>
+
+<h2>Salas cadastradas</h2>
+{% if salas %}
+<table>
+  <thead>
+    <tr><th>Nº</th><th>Nome</th><th>Capacidade</th></tr>
+  </thead>
+  <tbody>
+    {% for sala in salas %}
+    <tr>
+      <td>{{ sala.id }}</td>
+      <td>{{ sala.nome }}</td>
+      <td>{{ sala.capacidade }} pessoas</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Nenhuma sala cadastrada. Use o formulário acima para criar a primeira.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Solicitação nº {{ s.id }}: {{ s.evento }}</h1>
+<div class="caixa">
+  <p><strong>Solicitante:</strong> {{ s.solicitante }}</p>
+  <p><strong>Data:</strong> {{ s.data|data_br }} &nbsp; <strong>Horário:</strong> {{ s.hora_inicio }} às {{ s.hora_fim }}</p>
+  <p><strong>Quantidade de pessoas:</strong> {{ s.qtd_pessoas }}</p>
+  <p><strong>Status:</strong> {{ s.status|capitalize }}
+    {% if s.status == 'aprovada' %}(sala: {{ nomes_salas.get(s.sala_id, '') }}){% endif %}
+    {% if s.status == 'recusada' %}(motivo: {{ s.motivo_recusa }}){% endif %}
+  </p>
+</div>
+
+{% if s.status == 'pendente' %}
+<div class="caixa">
+  <h2>Aprovar</h2>
+  {% if salas %}
+  <form method="post" action="{{ url_for('aprovar', id_pedido=s.id) }}">
+    <label for="sala_id">Salas disponíveis neste horário</label>
+    <select id="sala_id" name="sala_id" required>
+      {% for sala in salas %}
+      <option value="{{ sala.id }}">{{ sala.nome }} (capacidade {{ sala.capacidade }})</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Aprovar com esta sala</button>
+  </form>
+  {% else %}
+  <p>Nenhuma sala disponível para esta data, horário e quantidade de pessoas. Você pode recusar informando o motivo.</p>
+  {% endif %}
+</div>
+
+<div class="caixa">
+  <h2>Recusar</h2>
+  <form method="post" action="{{ url_for('recusar', id_pedido=s.id) }}">
+    <label for="motivo">Motivo da recusa</label>
+    <textarea id="motivo" name="motivo" rows="3" required></textarea>
+    <button type="submit" class="recusar">Recusar solicitação</button>
+  </form>
+</div>
+{% endif %}
+<a href="{{ url_for('admin') }}">Voltar para a fila</a>
+{% endblock %}

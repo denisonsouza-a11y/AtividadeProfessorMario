@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Reservar Sala</h1>
+<div class="caixa">
+  <p>Sistema para agilizar o pedido de sala para eventos acadêmicos.</p>
+  <p>O CAEX envia a solicitação e acompanha a resposta. A administração analisa e aprova indicando a sala, ou recusa com um motivo.</p>
+  <a class="botao" href="{{ url_for('nova_solicitacao') }}">Nova solicitação (CAEX)</a>
+  <a class="botao" href="{{ url_for('admin') }}">Fila da administração</a>
+</div>
+{% endblock %}

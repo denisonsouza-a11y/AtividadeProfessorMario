@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Nova solicitação de sala</h1>
+<div class="caixa">
+  <form method="post" action="{{ url_for('nova_solicitacao') }}">
+    <label for="evento">Nome do evento</label>
+    <input id="evento" name="evento" value="{{ form.get('evento', '') }}" required>
+
+    <label for="solicitante">Quem está solicitando</label>
+    <input id="solicitante" name="solicitante" value="{{ form.get('solicitante', '') }}" required>
+
+    <div class="linha">
+      <div>
+        <label for="data">Data</label>
+        <input id="data" name="data" type="date" value="{{ form.get('data', '') }}" required>
+      </div>
+      <div>
+        <label for="hora_inicio">Início</label>
+        <input id="hora_inicio" name="hora_inicio" type="time" value="{{ form.get('hora_inicio', '') }}" required>
+      </div>
+      <div>
+        <label for="hora_fim">Fim</label>
+        <input id="hora_fim" name="hora_fim" type="time" value="{{ form.get('hora_fim', '') }}" required>
+      </div>
+      <div>
+        <label for="qtd_pessoas">Quantidade de pessoas</label>
+        <input id="qtd_pessoas" name="qtd_pessoas" type="number" min="1" value="{{ form.get('qtd_pessoas', '') }}" required>
+      </div>
+    </div>
+    <button type="submit">Enviar solicitação</button>
+  </form>
+</div>
+{% endblock %}
